@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.1"
+  },
+  "name": "f1-api",
+  "version": "1.0.0",
+  "description": "A API providing information on Formula One races. For COMP 3612 Fall 2024.",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechPowerAwaits/2521-assign3.git"
+  },
+  "author": "Richard Johnston",
+  "license": "0BSD",
+  "bugs": {
+    "url": "https://github.com/TechPowerAwaits/2521-assign3/issues"
+  },
+  "homepage": "https://github.com/TechPowerAwaits/2521-assign3#readme"
+}
