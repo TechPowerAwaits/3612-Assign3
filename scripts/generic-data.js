@@ -32,7 +32,7 @@ async function setDataRoutes(app, routePrefix = "", dataPath = defaultDataPath) 
 			const jsonData = await fs.readFile(dataFile.path, "utf8");
 			data[dataFile.basename] = JSON.parse(jsonData);
 
-			app.get(`/${routePrefix}/${dataFile.basename}`, (req, resp) => {
+			app.get(`/${routePrefix}${routePrefix ? "/" : ""}${dataFile.basename}`, (req, resp) => {
 				resp.json(data[dataFile.basename]);
 			});
 		} catch(error) {
