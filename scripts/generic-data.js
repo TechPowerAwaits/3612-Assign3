@@ -4,27 +4,27 @@
  * Exposes:
  * setDataRoutes -- Information from JSON files are stored and routes assigned
  * to them.
+ * 
+ * data -- The data acquired while setting the data routes.
  */
 
 const fs = require("fs").promises;
 const path = require("path");
 
 const defaultDataPath = path.join(__dirname, "..", "data");
+const data = {};
 
 /*
  * Purpose: Routes paths to data stored in dataPath.
  *
  * Details: The information from each file is interpreted as JSON file and is
- * returned as data[baseFileName]. For example, JSON content from a file
- * `test.json` will be stored as data[test].
+ * inserted into data as data[baseFileName]. For example, JSON content from a
+ * file `test.json` will be stored as data[test].
  * 
  * routePrefix specifies any string that will be appended to the created routes.
  * It must not end nor begin with a slash.
- * 
- * Returns: An object containing all the data.
  */
 async function setDataRoutes(app, routePrefix = "", dataPath = defaultDataPath) {
-	const data = {};
 	const dataFiles = (await fs.readdir(dataPath)).map(filename => new DataFile(path.join(dataPath, filename)));
 	
 	await Promise.all(dataFiles.map(async dataFile => {
@@ -44,8 +44,6 @@ async function setDataRoutes(app, routePrefix = "", dataPath = defaultDataPath) 
 		resp.json(data);
 	});
 
-	return data;
-
 	/*
 	 * Purpose: Creates a DataFile object.
 	 */
@@ -55,4 +53,4 @@ async function setDataRoutes(app, routePrefix = "", dataPath = defaultDataPath) 
 	}
 }
 
-module.exports = setDataRoutes;
+module.exports = {setDataRoutes, data};
