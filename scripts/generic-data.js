@@ -18,9 +18,12 @@ const defaultDataPath = path.join(__dirname, "..", "data");
  * returned as data[baseFileName]. For example, JSON content from a file
  * `test.json` will be stored as data[test].
  * 
+ * routePrefix specifies any string that will be appended to the created routes.
+ * It must not end nor begin with a slash.
+ * 
  * Returns: An object containing all the data.
  */
-async function setDataRoutes(app, dataPath = defaultDataPath) {
+async function setDataRoutes(app, routePrefix = "", dataPath = defaultDataPath) {
 	const data = {};
 	const dataFiles = (await fs.readdir(dataPath)).map(filename => new DataFile(path.join(dataPath, filename)));
 	
@@ -29,7 +32,7 @@ async function setDataRoutes(app, dataPath = defaultDataPath) {
 			const jsonData = await fs.readFile(dataFile.path, "utf8");
 			data[dataFile.basename] = JSON.parse(jsonData);
 
-			app.get(`/${dataFile.basename}`, (req, resp) => {
+			app.get(`/${routePrefix}/${dataFile.basename}`, (req, resp) => {
 				resp.json(data[dataFile.basename]);
 			});
 		} catch(error) {
@@ -37,7 +40,7 @@ async function setDataRoutes(app, dataPath = defaultDataPath) {
 		 }
 	}));
 
-	app.get("/", (req, resp) => {
+	app.get(`/${routePrefix}`, (req, resp) => {
 		resp.json(data);
 	});
 
