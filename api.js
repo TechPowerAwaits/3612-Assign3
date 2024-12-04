@@ -2,4 +2,4 @@ const express = require("express");
 const app = express();
 const data = require("./scripts/generic-data.js")(app);
 
-app.listen(8080);
+app.listen(3000);
