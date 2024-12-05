@@ -1,17 +1,19 @@
 const express = require("express");
 const app = express();
 
-const apiPath = "api";
+const apiRouter = express.Router();
+app.use("/api", apiRouter);
+
 const dataHandler = require("./scripts/generic-data.js");
 
-dataHandler.setDataRoutes(app, apiPath);
+dataHandler.setDataRoutes(apiRouter);
 const data = dataHandler.data;
 
-app.get(`/${apiPath}/teapot`, (req, resp) => {
+apiRouter.get("/teapot", (req, resp) => {
   resp.status(418).json({ teapot: { short: true, stout: true } });
 });
 
-app.get(`/${apiPath}/circuits/:id`, (req, resp) => {
+apiRouter.get("/circuits/:id", (req, resp) => {
   const targetCircuit = data["circuits"].find(
     (circuit) => circuit.circuitId == req.params.id
   );
@@ -23,7 +25,7 @@ app.get(`/${apiPath}/circuits/:id`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/constructors/:ref`, (req, resp) => {
+apiRouter.get("/constructors/:ref", (req, resp) => {
   const targetConstructor = data["constructors"].find(
     (constructor) => constructor.constructorRef == req.params.ref
   );
@@ -35,7 +37,7 @@ app.get(`/${apiPath}/constructors/:ref`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/constructorResults/:ref/:year`, (req, resp) => {
+apiRouter.get("/constructorResults/:ref/:year", (req, resp) => {
   const targetResults = data["results"].filter(
     (result) =>
       result.constructor.ref == req.params.ref &&
@@ -49,7 +51,7 @@ app.get(`/${apiPath}/constructorResults/:ref/:year`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/drivers/:ref`, (req, resp) => {
+apiRouter.get("/drivers/:ref", (req, resp) => {
   const targetDriver = data["drivers"].find(
     (driver) => driver.driverRef == req.params.ref
   );
@@ -61,7 +63,7 @@ app.get(`/${apiPath}/drivers/:ref`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/driverResults/:ref/:year`, (req, resp) => {
+apiRouter.get("/driverResults/:ref/:year", (req, resp) => {
   const targetResults = data["results"].filter(
     (result) =>
       result.driver.ref == req.params.ref && result.race.year == req.params.year
@@ -74,7 +76,7 @@ app.get(`/${apiPath}/driverResults/:ref/:year`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/races/season/:year`, (req, resp) => {
+apiRouter.get("/races/season/:year", (req, resp) => {
   const targetRaces = data["races"].filter(
     (race) => race.year == req.params.year
   );
@@ -86,7 +88,7 @@ app.get(`/${apiPath}/races/season/:year`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/races/id/:id`, (req, resp) => {
+apiRouter.get("/races/id/:id", (req, resp) => {
   const targetRace = data["races"].find((race) => race.id == req.params.id);
 
   if (targetRace) {
@@ -96,7 +98,7 @@ app.get(`/${apiPath}/races/id/:id`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/results/race/:id`, (req, resp) => {
+apiRouter.get("/results/race/:id", (req, resp) => {
   const targetResults = data["results"].filter(
     (result) => result.race.id == req.params.id
   );
@@ -108,7 +110,7 @@ app.get(`/${apiPath}/results/race/:id`, (req, resp) => {
   }
 });
 
-app.get(`/${apiPath}/results/season/:year`, (req, resp) => {
+apiRouter.get("/results/season/:year", (req, resp) => {
   const targetResults = data["results"].filter(
     (result) => result.race.year == req.params.year
   );

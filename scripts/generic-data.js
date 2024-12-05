@@ -20,15 +20,8 @@ const data = {};
  * Details: The information from each file is interpreted as JSON file and is
  * inserted into data as data[baseFileName]. For example, JSON content from a
  * file `test.json` will be stored as data[test].
- *
- * routePrefix specifies any string that will be appended to the created routes.
- * It must not end nor begin with a slash.
  */
-async function setDataRoutes(
-  app,
-  routePrefix = "",
-  dataPath = defaultDataPath
-) {
+async function setDataRoutes(router, dataPath = defaultDataPath) {
   const dataFiles = (await fs.readdir(dataPath)).map(
     (filename) => new DataFile(path.join(dataPath, filename))
   );
@@ -39,19 +32,16 @@ async function setDataRoutes(
         const jsonData = await fs.readFile(dataFile.path, "utf8");
         data[dataFile.basename] = JSON.parse(jsonData);
 
-        app.get(
-          `/${routePrefix}${routePrefix ? "/" : ""}${dataFile.basename}`,
-          (req, resp) => {
-            resp.json(data[dataFile.basename]);
-          }
-        );
+        router.get(`/${dataFile.basename}`, (req, resp) => {
+          resp.json(data[dataFile.basename]);
+        });
       } catch (error) {
         console.error(`${dataFile.path}: ${error.message}`);
       }
     })
   );
 
-  app.get(`/${routePrefix}`, (req, resp) => {
+  router.get("/", (req, resp) => {
     resp.json(data);
   });
 
