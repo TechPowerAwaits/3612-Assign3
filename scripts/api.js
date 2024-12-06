@@ -1,7 +1,7 @@
 /*
  * Purpose: Provides a F1 Driver API.
  *
- * Export is:
+ * Exports as:
  * setDataAndRoutes -- Sets up routes to the API using the given router.
  */
 

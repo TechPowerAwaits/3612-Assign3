@@ -1,7 +1,7 @@
 /*
  * Purpose: To serve a Formula One webpage.
  *
- * Export is:
+ * Exports as:
  * serve -- Sets up the webpage using the given router.
  */
 
