@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       /*
        * Purpose: Provides the default domain that contains the desired API.
        */
-      default_domain: "http://localhost:3000/api",
+      default_domain: "/api",
 
       /*
        * Purpose: Fetch data, but error out if response is not okay.
