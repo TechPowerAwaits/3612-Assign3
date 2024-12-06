@@ -82,6 +82,14 @@ function multiObjDataRoutes(data, router) {
     data["races"].filter((race) => race.year == params.year)
   );
 
+  expressData.sndData(router, "/qualifying/race/:id", (params) =>
+    data["qualifying"].filter((qual) => qual.race.id == params.id)
+  );
+
+  expressData.sndData(router, "/qualifying/season/:year", (params) =>
+    data["qualifying"].filter((qual) => qual.race.year == params.year)
+  );
+
   expressData.sndData(router, "/results/race/:id", (params) =>
     data["results"].filter((result) => result.race.id == params.id)
   );
