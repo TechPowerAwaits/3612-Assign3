@@ -13,119 +13,70 @@ apiRouter.get("/teapot", (req, resp) => {
   resp.status(418).json({ teapot: { short: true, stout: true } });
 });
 
-apiRouter.get("/circuits/:id", (req, resp) => {
-  const targetCircuit = data["circuits"].find(
-    (circuit) => circuit.circuitId == req.params.id
-  );
+function sndData(router, routePath, dataFunc) {
+  router.get(routePath, (req, resp) => {
+    const target = dataFunc(req.params);
+    console.log(target);
 
-  if (targetCircuit) {
-    resp.json(targetCircuit);
-  } else {
-    declareNotFound(resp);
+    if (
+      (target instanceof Array && target.length > 0) ||
+      (!(target instanceof Array) && target)
+    ) {
+      resp.json(target);
+    } else {
+      declareNotFound(resp);
+    }
+  });
+
+  function declareNotFound(resp) {
+    resp
+      .status(404)
+      .json({ error: { message: "Requested resource cannot be found." } });
   }
-});
-
-apiRouter.get("/constructors/:ref", (req, resp) => {
-  const targetConstructor = data["constructors"].find(
-    (constructor) => constructor.constructorRef == req.params.ref
-  );
-
-  if (targetConstructor) {
-    resp.json(targetConstructor);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/constructorResults/:ref/:year", (req, resp) => {
-  const targetResults = data["results"].filter(
-    (result) =>
-      result.constructor.ref == req.params.ref &&
-      result.race.year == req.params.year
-  );
-
-  if (targetResults) {
-    resp.json(targetResults);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/drivers/:ref", (req, resp) => {
-  const targetDriver = data["drivers"].find(
-    (driver) => driver.driverRef == req.params.ref
-  );
-
-  if (targetDriver) {
-    resp.json(targetDriver);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/driverResults/:ref/:year", (req, resp) => {
-  const targetResults = data["results"].filter(
-    (result) =>
-      result.driver.ref == req.params.ref && result.race.year == req.params.year
-  );
-
-  if (targetResults) {
-    resp.json(targetResults);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/races/season/:year", (req, resp) => {
-  const targetRaces = data["races"].filter(
-    (race) => race.year == req.params.year
-  );
-
-  if (targetRaces) {
-    resp.json(targetRaces);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/races/id/:id", (req, resp) => {
-  const targetRace = data["races"].find((race) => race.id == req.params.id);
-
-  if (targetRace) {
-    resp.json(targetRace);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/results/race/:id", (req, resp) => {
-  const targetResults = data["results"].filter(
-    (result) => result.race.id == req.params.id
-  );
-
-  if (targetResults) {
-    resp.json(targetResults);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-apiRouter.get("/results/season/:year", (req, resp) => {
-  const targetResults = data["results"].filter(
-    (result) => result.race.year == req.params.year
-  );
-
-  if (targetResults) {
-    resp.json(targetResults);
-  } else {
-    declareNotFound(resp);
-  }
-});
-
-function declareNotFound(resp) {
-  resp
-    .status(404)
-    .json({ error: { message: "Requested resource cannot be found." } });
 }
+
+sndData(apiRouter, "/circuits/:id", (params) =>
+  data["circuits"].find((circuit) => circuit.circuitId == params.id)
+);
+
+sndData(apiRouter, "/constructors/:ref", (params) =>
+  data["constructors"].find(
+    (constructor) => constructor.constructorRef == params.ref
+  )
+);
+
+sndData(apiRouter, "/constructorResults/:ref/:year", (params) =>
+  data["results"].filter(
+    (result) =>
+      result.constructor.ref == params.ref && result.race.year == params.year
+  )
+);
+
+sndData(apiRouter, "/drivers/:ref", (params) =>
+  data["drivers"].find((driver) => driver.driverRef == params.ref)
+);
+
+sndData(apiRouter, "/driverResults/:ref/:year", (params) =>
+  data["results"].filter(
+    (result) =>
+      result.driver.ref == params.ref && result.race.year == params.year
+  )
+);
+
+sndData(apiRouter, "/races/season/:year", (params) =>
+  data["races"].filter((race) => race.year == params.year)
+);
+
+sndData(apiRouter, "/races/id/:id", (params) =>
+  data["races"].find((race) => race.id == params.id)
+);
+
+sndData(apiRouter, "/results/race/:id", (params) =>
+  data["results"].filter((result) => result.race.id == params.id)
+);
+
+sndData(apiRouter, "/results/season/:year", (params) =>
+  data["results"].filter((result) => result.race.year == params.year)
+);
 
 app.listen(3000);
