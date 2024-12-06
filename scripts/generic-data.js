@@ -1,11 +1,10 @@
 /*
- * Purpose: Handles distribution of JSON data in a generic way.
+ * Purpose: Handles storage of JSON data in a generic way.
  *
  * Exposes:
- * setDataRoutes -- Information from JSON files are stored and routes assigned
- * to them.
+ * acquireData -- Information from JSON files are stored for future access.
  *
- * data -- The data acquired while setting the data routes.
+ * data -- The data acquired.
  */
 
 const fs = require("fs").promises;
@@ -21,7 +20,7 @@ const data = {};
  * inserted into data as data[baseFileName]. For example, JSON content from a
  * file `test.json` will be stored as data[test].
  */
-async function setDataRoutes(router, dataPath = defaultDataPath) {
+async function acquireData(dataPath = defaultDataPath) {
   const dataFiles = (await fs.readdir(dataPath)).map(
     (filename) => new DataFile(path.join(dataPath, filename))
   );
@@ -31,19 +30,11 @@ async function setDataRoutes(router, dataPath = defaultDataPath) {
       try {
         const jsonData = await fs.readFile(dataFile.path, "utf8");
         data[dataFile.basename] = JSON.parse(jsonData);
-
-        router.get(`/${dataFile.basename}`, (req, resp) => {
-          resp.json(data[dataFile.basename]);
-        });
       } catch (error) {
         console.error(`${dataFile.path}: ${error.message}`);
       }
     })
   );
-
-  router.get("/", (req, resp) => {
-    resp.json(data);
-  });
 
   /*
    * Purpose: Creates a DataFile object.
@@ -54,4 +45,4 @@ async function setDataRoutes(router, dataPath = defaultDataPath) {
   }
 }
 
-module.exports = { setDataRoutes, data };
+module.exports = { acquireData, data };
