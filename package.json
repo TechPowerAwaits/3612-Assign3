@@ -9,9 +9,11 @@
   },
   "name": "f1-api",
   "version": "1.0.0",
-  "description": "A API providing information on Formula One races. For COMP 3612 Fall 2024.",
+  "description": "An API and client providing information on Formula One races. For COMP 3612 Fall 2024.",
   "main": "server.js",
   "scripts": {
+    "build": "npx tailwindcss -o ./client/css/tailwind.min.css --minify",
+    "f1": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
