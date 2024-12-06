@@ -1,9 +1,9 @@
-const path = require("path");
 const express = require("express");
 const app = express();
-const clientPath = path.join(__dirname, "client");
 
-app.use(express.static(clientPath));
+const api = require("./scripts/api.js");
+const client = require("./scripts/client.js");
+
 startServer();
 
 /*
@@ -12,7 +12,12 @@ startServer();
 async function startServer() {
   const apiRouter = express.Router();
   app.use("/api", apiRouter);
-  await require("./scripts/api.js")(apiRouter);
-  app.get("/", (req, resp) => resp.send(path.join(clientPath, "index.html")));
+
+  const clientRouter = express.Router();
+  app.use("/", clientRouter);
+
+  await api(apiRouter);
+  client(clientRouter);
+
   app.listen(3000);
 }
