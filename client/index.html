@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F1 Season Viewer</title>
+    <link rel="stylesheet" href="css/tailwind.min.css" />
+    <script src="index.js"></script>
+  </head>
+  <body class="flex h-lvh flex-col bg-black text-white">
+    <header
+      class="flex w-full items-center justify-between bg-orange-500 has-[:disabled]:bg-slate-700"
+    >
+      <button
+        class="group -outline-offset-2 outline-blue-600 hover:outline disabled:cursor-not-allowed disabled:outline-gray-500"
+        id="logoButton"
+        type="button"
+      >
+        <img
+          class="group-disabled:grayscale"
+          src="Images/logo-mobile.png"
+          width="83"
+          height="64"
+          alt="Logo"
+          title="Go to main page"
+        />
+      </button>
+      <h1 class="text-2xl text-blue-600">F1 Season Viewer</h1>
+      <menu class="flex gap-2 pr-3">
+        <li>
+          <button
+            class="bg-blue-500 p-2 hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:hover:bg-gray-400"
+            id="homeButton"
+            type="button"
+          >
+            🏠
+          </button>
+        </li>
+        <li>
+          <button
+            class="bg-blue-500 p-2 hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:hover:bg-gray-400"
+            id="favButton"
+            type="button"
+          >
+            🌟
+          </button>
+        </li>
+      </menu>
+    </header>
+    <noscript
+      ><p class="bg-red-600 text-center font-bold text-white">
+        Please enable JavaScript in your browser. This site won't work properly
+        otherwise.
+      </p></noscript
+    >
+    <ol
+      class="absolute bottom-3 right-3 flex flex-col-reverse gap-y-2"
+      id="notifications"
+    ></ol>
+    <figure
+      class="loading hidden h-full place-content-center self-center data-[visible=1]:grid data-[visible=1]:cursor-progress"
+      id="mainLoading"
+    >
+      <img src="Images/loading.gif" width="112" height="112" />
+      <figcaption class="text-3xl font-black uppercase tracking-widest">
+        Loading...
+      </figcaption>
+    </figure>
+    <main>
+      <article class="hidden gap-x-12 p-1 data-[visible=1]:flex" id="home">
+        <section class="space-y-2">
+          <h2 class="text-xl font-semibold">
+            View information on Formula One Races
+          </h2>
+          <label class="font-medium" for="selSeason">Season:</label>
+          <select class="bg-neutral-700" id="selSeason">
+            <option value="">No Season Selected</option>
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+          </select>
+
+          <aside class="max-h-80 max-w-prose overflow-y-scroll">
+            <section class="my-2">
+              <h3 class="text-center text-lg font-medium">
+                About this project
+              </h3>
+
+              <p class="indent-8">
+                This project aims to provide details on different Formula One
+                season results (currently covering 2020-2023).
+              </p>
+
+              <p class="indent-8">
+                This was made for COMP 3612&mdash;a web course provided at Mount
+                Royal University. Thanks to
+                <a
+                  class="underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                  href="https://www.randyconnolly.com"
+                  >Prof. Connolly</a
+                >
+                for providing this assignment.
+              </p>
+            </section>
+
+            <section class="my-2">
+              <h3 class="text-center text-lg font-medium">
+                Developer Information
+              </h3>
+              <address class="not-italic">
+                <p>
+                  <span class="font-medium">Project Developer:</span> Richard
+                  Johnston &lt;<a
+                    class="underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="mailto:techpowerawaits@outlook.com"
+                    >techpowerawaits@outlook.com</a
+                  >&gt;
+                </p>
+                <p>
+                  <span class="font-medium">Project Repository:</span>
+                  <a
+                    class="underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://github.com/TechPowerAwaits/3612-Assign2"
+                    >https://github.com/TechPowerAwaits/3612-Assign2</a
+                  >
+                </p>
+              </address>
+            </section>
+            <section class="my-2">
+              <h3 class="text-center text-lg font-medium">Asset Sources</h3>
+              <ul class="text-neutral-500 *:before:content-['\25C7']">
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://tenor.com/bdhwU.gif"
+                    ><strong>Driving cat GIF</strong> came from Tenor and was
+                    uploaded by rabidewok89.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://freesvg.org/red-roadster-in-space"
+                    ><strong>Logo</strong> modified from Free SVG.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://tenor.com/view/vroooom-vroom-dog-gif-gif-20312530"
+                    ><strong>Loading GIF</strong> came from Tenor and was
+                    uploaded by bruwlstars.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://tenor.com/view/biker-cat-cat-driving-cute-gif-14420963"
+                    ><strong>Motorcycle Cat GIF</strong> came from Tenor and was
+                    uploaded by diegokunz.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://placehold.co/600x400"
+                  >
+                    <strong>Circuit Dialog Image</strong> was generated by
+                    placehold.co.
+                  </a>
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://placehold.co/512"
+                  >
+                    <strong>Driver Dialog Image</strong> was generated by
+                    placehold.co.
+                  </a>
+                </li>
+              </ul>
+            </section>
+
+            <section class="my-2">
+              <h3 class="text-center text-lg font-medium">Technologies Used</h3>
+              <ul class="text-neutral-500 *:before:content-['\25C7']">
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://tailwindcss.com"
+                    ><strong>Tailwind CSS</strong> is used for stylizing the
+                    website.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://prettier.io"
+                    ><strong>Prettier</strong> is used for stylizing the HTML
+                    and JavaScript.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://github.com/tailwindlabs/prettier-plugin-tailwindcss"
+                    ><strong>Tailwind CSS Plugin for Prettier</strong> sorts the
+                    Tailwind classes used.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://code.visualstudio.com"
+                    ><strong>Visual Studio Code</strong> is used for writing the
+                    HTML and JavaScript.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss"
+                    ><strong>Tailwind CSS IntelliSense</strong> is used to
+                    provide Tailwind CSS suggestions while coding.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+                    ><strong>Prettier Formatter for Visual Studio Code</strong>
+                    allows the usage of Prettier within Visual Studio Code.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://npmjs.com/"
+                    ><strong>npm</strong> is used to manage the installation of
+                    Tailwind CSS and Prettier.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://github.com"
+                    ><strong>GitHub</strong> is used to store all the files and
+                    host the webpage.</a
+                  >
+                </li>
+                <li class="has-[a:hover]:before:content-['\25C8']">
+                  <a
+                    class="text-white underline decoration-dotted underline-offset-4 hover:text-blue-300 hover:visited:text-red-300"
+                    href="https://placehold.co/"
+                    ><strong>placehold.co</strong> is used to generate some
+                    placeholder images.</a
+                  >
+                </li>
+              </ul>
+            </section>
+          </aside>
+        </section>
+        <aside class="hidden md:block">
+          <h2
+            class="text-wrap text-center text-xl font-semibold capitalize tracking-wide"
+          >
+            Make Kitty Happy! 😃
+          </h2>
+          <a href="https://tenor.com/bdhwU.gif">
+            <figure>
+              <img
+                src="Images/cat-driving-tenor.gif"
+                width="498"
+                height="325"
+                alt="Cat driving a car"
+                title="LOL 🙃"
+              />
+              <figcaption
+                class="text-wrap text-center text-xl font-medium tracking-wide"
+              >
+                Kitty wants you to select a season!
+              </figcaption>
+            </figure>
+          </a>
+        </aside>
+      </article>
+      <article
+        class="hidden grid-cols-max-2 gap-x-3 p-1 data-[visible=1]:grid"
+        id="browse"
+      >
+        <section id="races">
+          <h2 class="text-center text-lg font-semibold lg:text-xl">
+            <span id="raceListYear"></span> Races
+          </h2>
+          <ul
+            class="grid max-h-[500px] grid-flow-row grid-cols-max-3 justify-center gap-1 overflow-y-scroll text-center"
+            id="racesTable"
+          >
+            <li class="colHeader font-bold">
+              <button
+                class="underline decoration-dotted hover:text-blue-300"
+                data-sort="round"
+              >
+                Rnd
+                <span class="upArrow hidden data-[visible=1]:inline"
+                  >&#x2B06;</span
+                ><span class="downArrow hidden data-[visible=1]:inline"
+                  >&#x2B07;</span
+                ><span
+                  class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                >
+                  &#x2B07;</span
+                >
+              </button>
+            </li>
+            <li class="colHeader font-bold">
+              <button
+                class="underline decoration-dotted hover:text-blue-300"
+                data-sort="name"
+              >
+                Name
+                <span class="upArrow hidden data-[visible=1]:inline"
+                  >&#x2B06;</span
+                ><span class="downArrow hidden data-[visible=1]:inline"
+                  >&#x2B07;</span
+                ><span
+                  class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                >
+                  &#x2B07;</span
+                >
+              </button>
+            </li>
+            <li class="colHeader font-bold"></li>
+          </ul>
+        </section>
+        <section
+          class="peer hidden grid-cols-2 gap-y-8 data-[visible=1]:grid"
+          id="raceResults"
+        >
+          <section
+            class="col-span-2 grid grid-cols-max-3 justify-center gap-1 text-balance text-center text-lg font-semibold lg:text-xl"
+            id="raceInfoBlock"
+          >
+            <p>🏁</p>
+            <h2>
+              <span id="raceYear"></span> <span id="raceName"></span> (Round
+              <span id="raceRound"></span>)
+              <sup class="text-xs font-normal"
+                >[🌎<a
+                  id="raceLink"
+                  class="underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+                  >extern</a
+                >🌎]</sup
+              >
+            </h2>
+            <p>🏁</p>
+            <p>🚀</p>
+            <p>
+              In
+              <button
+                id="circuitBtn"
+                class="underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+                type="button"
+              >
+                <span id="circuitName"></span></button
+              >!
+              <sup class="text-xs font-normal"
+                >[🌎<a
+                  id="circuitLink"
+                  class="underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+                  >extern</a
+                >🌎]</sup
+              >
+            </p>
+            <p>🚀</p>
+            <p>📅</p>
+            <p>
+              <span id="raceDate"></span>
+              <sup class="text-xs font-normal"
+                >[🌎<a
+                  id="dateLink"
+                  class="underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+                  >extern</a
+                >🌎]</sup
+              >
+            </p>
+            <p>📅</p>
+          </section>
+
+          <section>
+            <h3 class="text-center text-lg font-semibold lg:text-xl">
+              Qualifying
+            </h3>
+            <ul
+              class="grid max-h-96 grid-flow-row grid-cols-max-7 justify-center gap-x-3 gap-y-1 overflow-y-scroll text-center"
+              id="qualifyingTable"
+            >
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="position"
+                >
+                  Pos
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li
+                class="colHeader col-span-2 cursor-not-allowed font-bold underline decoration-solid hover:text-gray-500"
+              >
+                Driver
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="constructor.name"
+                >
+                  Const
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="q1"
+                >
+                  Q1
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="q2"
+                >
+                  Q2
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="q3"
+                >
+                  Q3
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="driver.forename"
+                >
+                  FName
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="driver.surname"
+                >
+                  LName
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold"></li>
+            </ul>
+          </section>
+          <section>
+            <h3 class="text-center text-lg font-semibold lg:text-xl">
+              Results
+            </h3>
+            <ul
+              class="grid max-h-96 grid-flow-row grid-cols-max-6 justify-center gap-1 overflow-y-scroll text-center"
+              id="resultsTable"
+            >
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="position"
+                >
+                  Pos
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li
+                class="colHeader col-span-2 cursor-not-allowed font-bold underline decoration-solid hover:text-gray-500"
+              >
+                Driver
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="constructor.name"
+                >
+                  Const
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="laps"
+                >
+                  Laps
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-bold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="points"
+                >
+                  Pts
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="driver.forename"
+                >
+                  FName
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold">
+                <button
+                  class="underline decoration-dotted hover:text-blue-300"
+                  data-sort="driver.surname"
+                >
+                  LName
+                  <span class="upArrow hidden data-[visible=1]:inline"
+                    >&#x2B06;</span
+                  ><span class="downArrow hidden data-[visible=1]:inline"
+                    >&#x2B07;</span
+                  ><span
+                    class="invisibleArrow hidden data-[visible=1]:invisible data-[visible=1]:inline"
+                  >
+                    &#x2B07;</span
+                  >
+                </button>
+              </li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold"></li>
+              <li class="colHeader font-semibold"></li>
+            </ul>
+          </section>
+        </section>
+        <aside
+          class="hidden peer-data-[visible=1]:hidden md:block"
+          id="noRaceResults"
+        >
+          <h2
+            class="text-wrap text-center text-xl font-semibold capitalize tracking-wide"
+          >
+            Kitty is Watching You! 😏
+          </h2>
+          <a
+            href="https://tenor.com/view/biker-cat-cat-driving-cute-gif-14420963"
+          >
+            <figure class="grid justify-center">
+              <img
+                src="Images/biker-cat.gif"
+                width="480"
+                height="480"
+                alt="Cat driving a bike and staring out of the screen"
+                title="😟"
+              />
+              <figcaption
+                class="text-wrap text-center text-xl font-medium tracking-wide"
+              >
+                Kitty will stare at you until you pick a race!
+              </figcaption>
+            </figure>
+          </a>
+        </aside>
+      </article>
+      <dialog
+        class="bg-slate-700 text-white backdrop:bg-opacity-0"
+        id="circuit"
+      >
+        <form
+          class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
+          method="dialog"
+        >
+          <h2 class="col-span-2 text-center text-lg font-medium">Circuit</h2>
+          <menu class="flex gap-x-0.5">
+            <li>
+              <button
+                id="circuitDiagFavBtn"
+                class="group bg-blue-700 px-1 hover:bg-green-300 data-[favorite=1]:hover:bg-red-300"
+                type="button"
+              >
+                <span class="hidden group-data-[favorite=1]:inline"
+                  >&#x2605;</span
+                >
+                <span class="group-data-[favorite=1]:hidden">&#x2729;</span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="bg-blue-700 px-1 hover:bg-red-300 hover:font-bold"
+                type="submit"
+              >
+                X
+              </button>
+            </li>
+          </menu>
+          <img
+            class="row-span-3"
+            src="https://placehold.co/302x329"
+            alt="A placeholder image."
+            width="302"
+            height="329"
+          />
+          <p id="circuitDiagName" class="text-center"></p>
+          <div></div>
+          <p class="text-center">
+            <span id="circuitDiagLocation"></span>,
+            <span id="circuitDiagCountry"></span> (<span
+              id="circuitDiagLat"
+            ></span
+            >&deg;, <span id="circuitDiagLng"></span>&deg;)
+          </p>
+          <div></div>
+          <a
+            id="circuitDiagURL"
+            class="text-center text-sm underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+          >
+            [link]
+          </a>
+        </form>
+      </dialog>
+      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="driver">
+        <form
+          class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
+          method="dialog"
+        >
+          <h2 class="col-span-2 text-center text-lg font-medium">Driver</h2>
+          <menu class="flex gap-x-0.5">
+            <li>
+              <button
+                id="driverDiagFavBtn"
+                class="group bg-blue-700 px-1 hover:bg-green-300 data-[favorite=1]:hover:bg-red-300"
+                type="button"
+              >
+                <span class="hidden group-data-[favorite=1]:inline"
+                  >&#x2605;</span
+                >
+                <span class="group-data-[favorite=1]:hidden">&#x2729;</span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="bg-blue-700 px-1 hover:bg-red-300 hover:font-bold"
+                type="submit"
+              >
+                X
+              </button>
+            </li>
+          </menu>
+          <img
+            class="row-span-4"
+            src="https://placehold.co/512"
+            alt="A placeholder image."
+            width="512"
+            height="512"
+          />
+          <p class="text-center">
+            <span id="driverDiagName"></span> (<span
+              id="driverDiagNationality"
+            ></span
+            >)
+          </p>
+          <div></div>
+          <p class="text-center">
+            Born <span id="driverDiagMonth"></span>
+            <span id="driverDiagDay"></span>,
+            <span id="driverDiagYear"></span> (<span id="driverDiagAge"></span>
+            Years Old!)
+          </p>
+          <div></div>
+          <a
+            id="driverDiagURL"
+            class="text-center text-sm underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+          >
+            [link]
+          </a>
+          <ul
+            class="col-span-2 grid max-h-36 grid-cols-max-4 justify-center gap-1 overflow-y-scroll text-center"
+            id="driverDiagTable"
+          >
+            <li class="colHeader font-bold">Rnd</li>
+            <li class="colHeader font-bold">Race</li>
+            <li class="colHeader font-bold">Pos</li>
+            <li class="colHeader font-bold">Pts</li>
+          </ul>
+        </form>
+      </dialog>
+      <dialog
+        class="bg-slate-700 text-white backdrop:bg-opacity-0"
+        id="constructor"
+      >
+        <form class="mb-1 ml-1 grid grid-cols-max-2 gap-x-1.5" method="dialog">
+          <h2 class="text-center text-lg font-medium">Constructor</h2>
+          <menu class="flex gap-x-0.5">
+            <li>
+              <button
+                id="constructorDiagFavBtn"
+                class="group bg-blue-700 px-1 hover:bg-green-300 data-[favorite=1]:hover:bg-red-300"
+                type="button"
+              >
+                <span class="hidden group-data-[favorite=1]:inline"
+                  >&#x2605;</span
+                >
+                <span class="group-data-[favorite=1]:hidden">&#x2729;</span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="bg-blue-700 px-1 hover:bg-red-300 hover:font-bold"
+                type="submit"
+              >
+                X
+              </button>
+            </li>
+          </menu>
+          <p class="text-center">
+            <span id="constructorDiagName"></span> (<span
+              id="constructorDiagNationality"
+            ></span
+            >)
+          </p>
+          <div></div>
+          <a
+            id="constructorDiagURL"
+            class="text-center text-sm underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
+          >
+            [link]
+          </a>
+          <div></div>
+          <ul
+            class="grid max-h-36 grid-cols-max-5 justify-center gap-1 overflow-y-scroll text-center"
+            id="constructorDiagTable"
+          >
+            <li class="colHeader font-bold">Rnd</li>
+            <li class="colHeader font-bold">Race</li>
+            <li class="colHeader font-bold">Driver</li>
+            <li class="colHeader font-bold">Pos</li>
+            <li class="colHeader font-bold">Pts</li>
+          </ul>
+        </form>
+      </dialog>
+      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="fav">
+        <form
+          class="mb-1 ml-1 grid grid-cols-[1fr_1fr_1fr_max-content] gap-x-1.5"
+          method="dialog"
+        >
+          <h2 class="col-span-3 text-center text-lg font-medium">Favorites</h2>
+          <menu class="flex gap-x-0.5">
+            <li>
+              <button
+                id="favDiagTrashBtn"
+                class="group bg-blue-700 px-1 hover:bg-red-300"
+                type="submit"
+              >
+                🗑
+              </button>
+            </li>
+            <li>
+              <button
+                class="bg-blue-700 px-1 hover:bg-red-300 hover:font-bold"
+                type="submit"
+              >
+                X
+              </button>
+            </li>
+          </menu>
+          <h3 class="text-center font-medium">Drivers</h3>
+          <h3 class="text-center font-medium">Constructors</h3>
+          <h3 class="text-center font-medium">Circuits</h3>
+          <div></div>
+          <ul class="max-h-80 overflow-y-scroll" id="favDiagDrivers"></ul>
+          <ul class="max-h-80 overflow-y-scroll" id="favDiagConstructors"></ul>
+          <ul class="max-h-80 overflow-y-scroll" id="favDiagCircuits"></ul>
+        </form>
+      </dialog>
+    </main>
+
+    <template id="notificationTemplate">
+      <li
+        class="w-48 text-wrap break-words rounded-lg bg-lime-400 p-2 text-center"
+      >
+        <h2 class="font-semibold"></h2>
+        <p></p>
+      </li>
+    </template>
+    <template id="racesTemplate">
+      <h2 class="text-center text-lg font-semibold lg:text-xl">[year] Races</h2>
+      <table
+        class="border-separate border-spacing-0.5 text-center text-sm lg:border-spacing-3 lg:text-base"
+      >
+        <thead>
+          <tr>
+            <th scope="col" class="sortable round">Rnd</th>
+            <th scope="col" class="sortable name">Name</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </template>
+  </body>
+</html>
