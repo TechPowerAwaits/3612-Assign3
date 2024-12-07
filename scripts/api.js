@@ -32,6 +32,24 @@ function setDataRoutes(data, router) {
   multiObjDataRoutes(data, router);
 
   router.get("/", (req, resp) => resp.json(data));
+  set404Handler(router);
+
+  /*
+   * Purpose: To handle invalid routes given.
+   *
+   * Details: It is slightly hacky, as this handler needs to be set last after
+   * all other routes have been set.
+   */
+  function set404Handler(router) {
+    router.get("*", (req, resp) =>
+      resp.status(404).json({
+        error: {
+          message:
+            "The path given leads to no resources. Please check your spelling.",
+        },
+      })
+    );
+  }
 }
 
 /*
