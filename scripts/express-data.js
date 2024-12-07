@@ -22,14 +22,15 @@ let notFoundHandler = (resp) =>
  * the given router at the given path.
  *
  * Details: The dataFunc receives a params object containing property names
- * corresponding to the received parameters.
+ * corresponding to the received parameters. All of the received parameters
+ * are guaranteed to be lowercase strings.
  *
  * If the dataFunc returns an empty array or a falsy value, the notFoundHandler
  * will be triggered.
  */
 function sndData(router, routePath, dataFunc) {
   router.get(routePath, (req, resp) => {
-    const target = dataFunc(req.params);
+    const target = dataFunc(getLowerParams(req.params));
 
     if (
       (target instanceof Array && target.length > 0) ||
@@ -40,6 +41,21 @@ function sndData(router, routePath, dataFunc) {
       notFoundHandler(resp);
     }
   });
+
+  /*
+   * Purpose: To normalize parameter values to lowercase strings.
+   *
+   * Returns: An object of parameters.
+   */
+  function getLowerParams(origParams) {
+    const params = {};
+
+    for (paramName in origParams) {
+      params[paramName] = origParams[paramName].toLowerCase();
+    }
+
+    return params;
+  }
 }
 
 module.exports = { notFoundHandler, sndData };
