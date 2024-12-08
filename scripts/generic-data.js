@@ -14,7 +14,7 @@ const defaultDataPath = path.join(__dirname, "..", "data");
 const data = {};
 
 /*
- * Purpose: Routes paths to data stored in dataPath.
+ * Purpose: Reads in JSON files stored in the given dataPath.
  *
  * Details: The information from each file is interpreted as JSON file and is
  * inserted into data as data[baseFileName]. For example, JSON content from a

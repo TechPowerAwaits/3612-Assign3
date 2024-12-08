@@ -33,7 +33,8 @@ function setDataRoutes(data, router) {
 
   router.get("/", (req, resp) => resp.json(data));
 
-  // Inspired by the Express.JS's official FAQ answer on how to handle 404 Errors.
+  // Inspired by Express.js's official FAQ answer on how to handle 404 Errors.
+  // https://expressjs.com/en/starter/faq.html
   router.use((req, resp, next) =>
     resp.status(404).json({
       error: {
