@@ -32,6 +32,16 @@ function setDataRoutes(data, router) {
   multiObjDataRoutes(data, router);
 
   router.get("/", (req, resp) => resp.json(data));
+
+  // Inspired by the Express.JS's official FAQ answer on how to handle 404 Errors.
+  router.use((req, resp, next) =>
+    resp.status(404).json({
+      error: {
+        message:
+          "The path given leads to no resources. Please check your spelling.",
+      },
+    })
+  );
 }
 
 /*
