@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>F1 Season Viewer</title>
-    <link rel="stylesheet" href="css/tailwind.min.css" />
+    <link rel="stylesheet" href="tailwind.min.css" />
     <script src="index.js"></script>
   </head>
   <body class="flex h-lvh flex-col bg-black text-white">
     <header
-      class="flex w-full items-center justify-between bg-orange-500 has-[:disabled]:bg-slate-700"
+      class="flex w-full items-center justify-between bg-orange-500 has-disabled:bg-slate-700"
     >
       <button
         class="group -outline-offset-2 outline-blue-600 hover:outline disabled:cursor-not-allowed disabled:outline-gray-500"
@@ -61,7 +61,12 @@
       class="loading hidden h-full place-content-center self-center data-[visible=1]:grid data-[visible=1]:cursor-progress"
       id="mainLoading"
     >
-      <img src="Images/loading.gif" width="112" height="112" />
+      <img
+        src="Images/loading.gif"
+        alt="Animation of dog in toy car spinning around"
+        width="112"
+        height="112"
+      />
       <figcaption class="text-3xl font-black uppercase tracking-widest">
         Loading...
       </figcaption>
@@ -324,6 +329,7 @@
               <button
                 class="underline decoration-dotted hover:text-blue-300"
                 data-sort="round"
+                type="button"
               >
                 Rnd
                 <span class="upArrow hidden data-[visible=1]:inline"
@@ -341,6 +347,7 @@
               <button
                 class="underline decoration-dotted hover:text-blue-300"
                 data-sort="name"
+                type="button"
               >
                 Name
                 <span class="upArrow hidden data-[visible=1]:inline"
@@ -385,6 +392,7 @@
                 id="circuitBtn"
                 class="underline decoration-dotted hover:text-blue-300 hover:visited:text-red-300"
                 type="button"
+                title="circuit"
               >
                 <span id="circuitName"></span></button
               >!
@@ -423,6 +431,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="position"
+                  type="button"
                 >
                   Pos
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -445,6 +454,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="constructor.name"
+                  type="button"
                 >
                   Const
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -462,6 +472,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="q1"
+                  type="button"
                 >
                   Q1
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -479,6 +490,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="q2"
+                  type="button"
                 >
                   Q2
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -496,6 +508,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="q3"
+                  type="button"
                 >
                   Q3
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -514,6 +527,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="driver.forename"
+                  type="button"
                 >
                   FName
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -531,6 +545,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="driver.surname"
+                  type="button"
                 >
                   LName
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -562,6 +577,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="position"
+                  type="button"
                 >
                   Pos
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -584,6 +600,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="constructor.name"
+                  type="button"
                 >
                   Const
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -601,6 +618,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="laps"
+                  type="button"
                 >
                   Laps
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -618,6 +636,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="points"
+                  type="button"
                 >
                   Pts
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -636,6 +655,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="driver.forename"
+                  type="button"
                 >
                   FName
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -653,6 +673,7 @@
                 <button
                   class="underline decoration-dotted hover:text-blue-300"
                   data-sort="driver.surname"
+                  type="button"
                 >
                   LName
                   <span class="upArrow hidden data-[visible=1]:inline"
@@ -701,10 +722,7 @@
           </a>
         </aside>
       </article>
-      <dialog
-        class="bg-slate-700 text-white backdrop:bg-opacity-0"
-        id="circuit"
-      >
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="circuit">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
           method="dialog"
@@ -757,7 +775,7 @@
           </a>
         </form>
       </dialog>
-      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="driver">
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="driver">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
           method="dialog"
@@ -824,7 +842,7 @@
         </form>
       </dialog>
       <dialog
-        class="bg-slate-700 text-white backdrop:bg-opacity-0"
+        class="bg-slate-700 text-white backdrop:bg-black/25"
         id="constructor"
       >
         <form class="mb-1 ml-1 grid grid-cols-max-2 gap-x-1.5" method="dialog">
@@ -877,7 +895,7 @@
           </ul>
         </form>
       </dialog>
-      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="fav">
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="fav">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_1fr_max-content] gap-x-1.5"
           method="dialog"
@@ -920,20 +938,6 @@
         <h2 class="font-semibold"></h2>
         <p></p>
       </li>
-    </template>
-    <template id="racesTemplate">
-      <h2 class="text-center text-lg font-semibold lg:text-xl">[year] Races</h2>
-      <table
-        class="border-separate border-spacing-0.5 text-center text-sm lg:border-spacing-3 lg:text-base"
-      >
-        <thead>
-          <tr>
-            <th scope="col" class="sortable round">Rnd</th>
-            <th scope="col" class="sortable name">Name</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
     </template>
   </body>
 </html>
