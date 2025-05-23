@@ -12,7 +12,7 @@
   "description": "An API and client providing information on Formula One races. For COMP 3612 Fall 2024.",
   "main": "server.js",
   "scripts": {
-    "build": "npx @tailwindcss/cli -i /client/index.css -o ./client/tailwind.min.css --minify",
+    "build": "npx @tailwindcss/cli -i ./client/index.css -o ./client/tailwind.min.css --minify",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
