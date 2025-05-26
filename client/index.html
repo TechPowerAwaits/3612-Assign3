@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>F1 Season Viewer</title>
-    <link rel="stylesheet" href="css/tailwind.min.css" />
+    <link rel="stylesheet" href="tailwind.min.css" />
     <script src="index.js"></script>
   </head>
   <body class="flex h-lvh flex-col bg-black text-white">
     <header
-      class="flex w-full items-center justify-between bg-orange-500 has-[:disabled]:bg-slate-700"
+      class="flex w-full items-center justify-between bg-orange-500 has-disabled:bg-slate-700"
     >
       <button
         class="group -outline-offset-2 outline-blue-600 hover:outline disabled:cursor-not-allowed disabled:outline-gray-500"
@@ -721,10 +721,7 @@
           </a>
         </aside>
       </article>
-      <dialog
-        class="bg-slate-700 text-white backdrop:bg-opacity-0"
-        id="circuit"
-      >
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="circuit">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
           method="dialog"
@@ -777,7 +774,7 @@
           </a>
         </form>
       </dialog>
-      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="driver">
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="driver">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_max-content] gap-x-1.5"
           method="dialog"
@@ -844,7 +841,7 @@
         </form>
       </dialog>
       <dialog
-        class="bg-slate-700 text-white backdrop:bg-opacity-0"
+        class="bg-slate-700 text-white backdrop:bg-black/25"
         id="constructor"
       >
         <form class="mb-1 ml-1 grid grid-cols-max-2 gap-x-1.5" method="dialog">
@@ -897,7 +894,7 @@
           </ul>
         </form>
       </dialog>
-      <dialog class="bg-slate-700 text-white backdrop:bg-opacity-0" id="fav">
+      <dialog class="bg-slate-700 text-white backdrop:bg-black/25" id="fav">
         <form
           class="mb-1 ml-1 grid grid-cols-[1fr_1fr_1fr_max-content] gap-x-1.5"
           method="dialog"

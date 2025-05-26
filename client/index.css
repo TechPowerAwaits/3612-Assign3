@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@utility grid-cols-max-* {
+  grid-template-columns: repeat(--value(integer), max-content);
+}
+
+@utility grid-rows-max-* {
+  grid-template-rows: repeat(--value(integer), max-content);
+}
